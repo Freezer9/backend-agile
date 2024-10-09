@@ -20,6 +20,7 @@ return new class extends Migration
             $table->double('protein');
             $table->double('kalori');
             $table->text('link');
+            $table->text('foto');
             $table->string('goal', 100);
             $table->string('waktu', 100);
             $table->timestamps();

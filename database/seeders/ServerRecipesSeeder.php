@@ -25,6 +25,7 @@ class ServerRecipesSeeder extends Seeder
                 'protein' => $recipeData->protein,
                 'lemak' => $recipeData->lemak,
                 'link' => $recipeData->link,
+                'foto' => $recipeData->foto,
                 'goal' => $recipeData->goal,
                 'waktu' => $recipeData->waktu,
             ]);

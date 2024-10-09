@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'fast_api_key' => env('APP_FAST_API_KEY'),
+
 ];

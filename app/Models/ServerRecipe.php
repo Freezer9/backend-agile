@@ -20,6 +20,7 @@ class ServerRecipe extends Model
         'link',
         'goal',
         'waktu',
+        'foto',
     ];
 
 }

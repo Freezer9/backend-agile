@@ -16,4 +16,10 @@ class ServerRecipeController extends Controller
         $serverrecipes = ServerRecipe::all();
         return $this->response->resource($serverrecipes);
     }
+
+    public function show(string $id)
+    {
+        $serverrecipe = ServerRecipe::find($id);
+        return $this->response->resource($serverrecipe);
+    }
 }
