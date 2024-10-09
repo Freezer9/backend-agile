@@ -8,6 +8,7 @@
         "php": "^8.2",
         "agileteknik/api-response": "^1.2",
         "agileteknik/auth": "1.5.8",
+        "agileteknik/storage": "^1.2",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
