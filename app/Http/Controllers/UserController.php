@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use AgileTeknik\API\Controller;
+use App\enum\EMediaCollection;
 use Illuminate\Http\Request;
 
 
- 
+
 class UserController extends Controller
 {
     public function index()
@@ -40,8 +42,29 @@ class UserController extends Controller
 
     public function update(Request $request, int $id)
     {
-        $user = User::find($id);
-        $user->update($request->all());
+        $user = User::where('id', $id)->first();
+        if (!$user) {
+            return $this->response->error('User not found.', 404);
+        }
+
+        $validateUser = $request->validate([
+            'name' => 'required',
+            'email' => 'nullable',
+            'password' => 'nullable',
+            'goal' => 'nullable',
+            'thumbnail' => 'nullable|image',
+        ]);
+        if ($request->hasFile('thumbnail')) {
+            $media = $user->getMedia(EMediaCollection::USER_PROFILE_THUMBNAIL->value)
+                ->where('model_id', $user->id)
+                ->first();
+            if ($media) {
+                $media->delete();
+            }
+            $user->saveMedia(EMediaCollection::USER_PROFILE_THUMBNAIL, $validateUser['thumbnail']);
+        }
+        $user->update($validateUser);
+        $user->load('media');
         return $this->response->resource($user);
     }
 
@@ -52,5 +75,3 @@ class UserController extends Controller
         return $this->response->resource($user);
     }
 }
-
-

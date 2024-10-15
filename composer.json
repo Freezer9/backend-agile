@@ -8,7 +8,7 @@
         "php": "^8.2",
         "agileteknik/api-response": "^1.2",
         "agileteknik/auth": "1.5.8",
-        "agileteknik/storage": "^1.2",
+        "agileteknik/storage": "v1.2.6",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
@@ -68,12 +68,12 @@
             "php-http/discovery": true
         }
     },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
     "repositories": [
         {
             "type": "composer",
             "url": "https://repo.agileteknik.com"
         }
-    ],
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    ]
 }
