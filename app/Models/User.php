@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Testing\Fluent\Concerns\Has;
 
 class User extends Authenticatable implements AgileTeknikAuthUser, AgileTeknikMedia
 {
@@ -32,7 +31,7 @@ class User extends Authenticatable implements AgileTeknikAuthUser, AgileTeknikMe
     ];
 
     protected $appends = [
-        'thumbnail_url',
+        'profile_image',
     ];
 
     protected function casts(): array
@@ -48,7 +47,7 @@ class User extends Authenticatable implements AgileTeknikAuthUser, AgileTeknikMe
         return $this->hasMany(UserRecipe::class);
     }
 
-    protected function thumbnailUrl(): Attribute
+    protected function profileImage(): Attribute
     {
         return Attribute::make(
             get: function () {
