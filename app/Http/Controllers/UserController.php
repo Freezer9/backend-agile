@@ -6,8 +6,7 @@ use App\Models\User;
 use AgileTeknik\API\Controller;
 use App\Enum\EMediaCollection;
 use Illuminate\Http\Request;
-
-
+use Illuminate\Support\Arr;
 
 class UserController extends Controller
 {
@@ -51,20 +50,21 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'nullable',
             'password' => 'nullable',
-            'goal' => 'nullable',
-            'thumbnail' => 'nullable|image',
+            'goal' => 'required',
+            'profile_image' => 'nullable|image',
         ]);
-        if ($request->hasFile('thumbnail')) {
+        if ($request->hasFile('profile_image')) {
             $media = $user->getMedia(EMediaCollection::USER_PROFILE_THUMBNAIL->value)
                 ->where('model_id', $user->id)
                 ->first();
             if ($media) {
                 $media->delete();
             }
-            $user->saveMedia(EMediaCollection::USER_PROFILE_THUMBNAIL, $validateUser['thumbnail']);
+            $user->saveMedia(EMediaCollection::USER_PROFILE_THUMBNAIL, $validateUser['profile_image']);
         }
-        $user->update($validateUser);
+        $user->update(Arr::except($validateUser, 'profile_image'));
         $user->load('media');
+        
         return $this->response->resource($user);
     }
 
