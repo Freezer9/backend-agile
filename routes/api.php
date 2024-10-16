@@ -26,4 +26,3 @@ Route::group([
     Route::put('/userrecipe/{id}', [UserRecipeController::class, 'update']);
     Route::delete('/userrecipe/{id}', [UserRecipeController::class, 'destroy']);
 });
-
