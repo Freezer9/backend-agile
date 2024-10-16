@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use AgileTeknik\API\Controller;
-use App\enum\EMediaCollection;
+use App\Enum\EMediaCollection;
 use Illuminate\Http\Request;
 
 

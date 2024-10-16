@@ -17,8 +17,6 @@ Route::group([
     Route::put('/user/{id}', [UserController::class, 'update']);
     Route::delete('/user/{id}', [UserController::class, 'destroy']);
 
-
-
     Route::get('/serverrecipe', [ServerRecipeController::class, 'index']);
     Route::get('/serverrecipe/{id}', [ServerRecipeController::class, 'show']);
 

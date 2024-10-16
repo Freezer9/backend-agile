@@ -2,18 +2,15 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
 use AgileTeknik\Auth\AgileTeknikAuthUser;
 use AgileTeknik\Auth\HasAgileTeknikAuth;
 use AgileTeknik\Storage\AgileTeknikMedia;
 use AgileTeknik\Storage\HasAgileTeknikMedia;
-use App\enum\EMediaCollection;
+use App\Enum\EMediaCollection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Testing\Fluent\Concerns\Has;
 
 class User extends Authenticatable implements AgileTeknikAuthUser, AgileTeknikMedia
 {

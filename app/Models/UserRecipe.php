@@ -4,7 +4,7 @@ namespace App\Models;
 
 use AgileTeknik\Storage\HasAgileTeknikMedia;
 use AgileTeknik\Storage\AgileTeknikMedia;
-use App\enum\EMediaCollection;
+use App\Enum\EMediaCollection;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,15 +21,18 @@ class UserRecipe extends Model implements AgileTeknikMedia
         'link',
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+    protected $hidden = [
+        'media',
+    ];
 
     protected $appends = [
         'thumbnail_url',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     protected function thumbnailUrl(): Attribute
     {

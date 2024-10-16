@@ -5,18 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserRecipe;
 use AgileTeknik\API\Controller;
-use App\enum\EMediaCollection;
+use App\Enum\EMediaCollection;
 use Illuminate\Support\Arr;
 
 class UserRecipeController extends Controller
 {
     public function index($id)
     {
-        $userrecipes = UserRecipe::with('user')->where('user_id', $id)->get();
+        $userrecipes = UserRecipe::where('user_id', $id)->get();
         return $this->response->resource($userrecipes);
     }
-
-
 
     public function store(Request $request)
     {
@@ -25,7 +23,7 @@ class UserRecipeController extends Controller
             'nama' => 'required',
             'bahan' => 'required',
             'link' => 'required',
-            'thumbnail' => 'required|image',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         $userrecipe = UserRecipe::create(Arr::except($validateRequstData, 'thumbnail'));
@@ -51,17 +49,18 @@ class UserRecipeController extends Controller
 
     public function update(Request $request, string $id)
     {
-
         $userrecipe = UserRecipe::where('id', $id)->first();
         if (!$userrecipe) {
             return $this->response->error('User recipe not found.', 404);
         }
+
         $validateRequestData = $request->validate([
             'nama' => 'required',
             'bahan' => 'required',
             'link' => 'required',
-            'thumbnail' => 'nullable|image',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
+
         if ($request->hasFile('thumbnail')) {
             $media = $userrecipe->getMedia(EMediaCollection::USER_RECIPE_THUMBNAIL->value)
                 ->where('model_id', $userrecipe->id)
@@ -69,6 +68,7 @@ class UserRecipeController extends Controller
             if ($media) {
                 $media->delete();
             }
+
             $userrecipe->saveMedia(EMediaCollection::USER_RECIPE_THUMBNAIL, $validateRequestData['thumbnail']);
         }
         $userrecipe->update(Arr::except($validateRequestData, 'thumbnail'));
