@@ -51,7 +51,7 @@ class UserController extends Controller
             'email' => 'nullable',
             'password' => 'nullable',
             'goal' => 'required',
-            'profile_image' => 'nullable|image',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
         if ($request->hasFile('profile_image')) {
             $media = $user->getMedia(EMediaCollection::USER_PROFILE_THUMBNAIL->value)
@@ -64,7 +64,7 @@ class UserController extends Controller
         }
         $user->update(Arr::except($validateUser, 'profile_image'));
         $user->load('media');
-        
+
         return $this->response->resource($user);
     }
 

@@ -23,6 +23,7 @@ class UserRecipe extends Model implements AgileTeknikMedia
 
     protected $hidden = [
         'media',
+        'updated_at'
     ];
 
     protected $appends = [
