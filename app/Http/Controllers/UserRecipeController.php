@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\UserRecipe;
 use AgileTeknik\API\Controller;
 use App\Enum\EMediaCollection;
+use App\Http\Requests\UserRecipeRequest;
 use Illuminate\Support\Arr;
 
 class UserRecipeController extends Controller
@@ -13,18 +13,13 @@ class UserRecipeController extends Controller
     public function index($id)
     {
         $userrecipes = UserRecipe::where('user_id', $id)->get();
+
         return $this->response->resource($userrecipes);
     }
 
-    public function store(Request $request)
+    public function store(UserRecipeRequest $request)
     {
-        $validateRequstData = $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'nama' => 'required',
-            'bahan' => 'required',
-            'link' => 'required',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        $validateRequstData = $request->validated();
 
         $userrecipe = UserRecipe::create(Arr::except($validateRequstData, 'thumbnail'));
         $userrecipe->saveMedia(EMediaCollection::USER_RECIPE_THUMBNAIL, $validateRequstData['thumbnail']);
@@ -47,19 +42,14 @@ class UserRecipeController extends Controller
     }
 
 
-    public function update(Request $request, string $id)
+    public function update(UserRecipeRequest $request, string $id)
     {
         $userrecipe = UserRecipe::where('id', $id)->first();
         if (!$userrecipe) {
             return $this->response->error('User recipe not found.', 404);
         }
 
-        $validateRequestData = $request->validate([
-            'nama' => 'required',
-            'bahan' => 'required',
-            'link' => 'required',
-            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        $validateRequestData = $request->validated();
 
         if ($request->hasFile('thumbnail')) {
             $media = $userrecipe->getMedia(EMediaCollection::USER_RECIPE_THUMBNAIL->value)
