@@ -17,7 +17,7 @@ class VerifyFastApiKey
             && $request->header('x-api-key') == $apiKey
         );
 
-        abort_if (! $apiKeyIsValid, 403, 'Access denied');
+        abort_if(! $apiKeyIsValid, 403, 'Access denied');
 
         return $next($request);
     }

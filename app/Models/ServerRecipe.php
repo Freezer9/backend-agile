@@ -19,8 +19,8 @@ class ServerRecipe extends Model
         'lemak',
         'link',
         'goal',
+        'jenis',
         'waktu',
         'foto',
     ];
-
 }

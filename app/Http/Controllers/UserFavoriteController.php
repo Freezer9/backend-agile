@@ -11,7 +11,9 @@ class UserFavoriteController extends Controller
 {
     public function index($id)
     {
-        $favorites = UserFavorite::where('user_id', $id)->with('recipe')->get();
+        $favorites = UserFavorite::where('user_id', $id)->get()->map(function ($favorite) {
+            return $favorite->recipe;
+        });
 
         return $this->response->resource($favorites);
     }
@@ -23,16 +25,22 @@ class UserFavoriteController extends Controller
             'recipe_id' => 'required|integer',
         ]);
 
-        $user = User::find($request->user_id);
+        $user = User::with('favorites')->find($request->user_id);
 
         if (!$user) {
             return $this->response->error('User not found', 404);
-        } else {
-            $favorite = new UserFavorite();
-            $favorite->user_id = $request->user_id;
-            $favorite->recipe_id = $request->recipe_id;
-            $favorite->save();
         }
+
+        $favoriteExists = $user->favorites->contains('recipe_id', $request->recipe_id);
+
+        if ($favoriteExists) {
+            return $this->response->error('Favorite already exists', 400);
+        }
+
+        $favorite = new UserFavorite();
+        $favorite->user_id = $request->user_id;
+        $favorite->recipe_id = $request->recipe_id;
+        $favorite->save();
 
         return $this->response->resource($favorite);
     }

@@ -14,7 +14,7 @@ class ServerRecipesSeeder extends Seeder
     public function run(): void
     {
         $client = new Client(['verify' => false]);
-        $response = $client->get("https://raw.githubusercontent.com/Freezer9/My-Dataset/refs/heads/main/JSON/data/data_mangan.json");
+        $response = $client->get("https://script.google.com/macros/s/AKfycbwhjscgOAire_JbuvveQN1-iEQ-ZMKPd8so56BlfWa3y9Bk1p5rOhZsbKgyeIa4tDM/exec");
         $recipes = json_decode($response->getBody()->getContents());
         foreach ($recipes as $recipeData) {
             ServerRecipe::create([

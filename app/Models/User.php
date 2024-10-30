@@ -46,6 +46,11 @@ class User extends Authenticatable implements AgileTeknikAuthUser, AgileTeknikMe
         return $this->hasMany(UserRecipe::class);
     }
 
+    public function favorites()
+    {
+        return $this->hasMany(UserFavorite::class, 'user_id', 'id');
+    }
+
     protected function profileImage(): Attribute
     {
         return Attribute::make(
