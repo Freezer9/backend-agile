@@ -36,7 +36,6 @@ return [
     */
 
     'mailers' => [
-
         'smtp' => [
             'transport' => 'smtp',
             'url' => env('MAIL_URL'),
@@ -93,6 +92,11 @@ return [
                 'ses',
                 'postmark',
             ],
+        ],
+
+        'elastic_email' => [
+            'transport' => 'elastic_email',
+            'key' => env('ELASTIC_EMAIL_KEY'),
         ],
 
     ],
