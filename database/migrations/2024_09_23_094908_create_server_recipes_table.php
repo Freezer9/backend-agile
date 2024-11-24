@@ -22,7 +22,6 @@ return new class extends Migration
             $table->text('link');
             $table->text('foto');
             $table->string('goal', 100);
-            $table->string('jenis', 100);
             $table->string('waktu', 100);
             $table->timestamps();
         });

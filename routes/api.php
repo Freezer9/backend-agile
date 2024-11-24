@@ -10,7 +10,7 @@ use App\Http\Controllers\UserRecipeController;
 
 Route::group([
     'prefix' => 'v1',
-    // 'middleware' => 'with_fast_api_key'
+    'middleware' => 'with_fast_api_key'
 ], function () {
     Route::get('/user', [UserController::class, 'index']);
     Route::get('/user/{id}', [UserController::class, 'show']);
